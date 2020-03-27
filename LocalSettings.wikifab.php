@@ -7,7 +7,8 @@ if(! isset($wgUploadPath) || ! $wgUploadPath ) {
 $wgEnableUploads = true;
 
 $wgDefaultSkin = "chameleon";
-
+// /images/mylogo.png should be a 152x50 px image.
+$wgLogo = $wgScriptPath . '/images/mylogo.png';
 
 require_once "$IP/extensions/SemanticMediaWiki/SemanticMediaWiki.php";
 enableSemantics( $wgServer );
