@@ -70,6 +70,16 @@ $wgVirtualRestConfig['modules']['parsoid'] = array(
 );
 
 
+// Create rights for PdfExport
+$wgAvailableRights[] = 'exportpdf';
+// add exportpdf right to all users
+$wgGroupPermissions['*']['exportpdf'] = true;
+// add exportpdf right to the 'basic' grant so we can access over API request
+$wgGrantPermissions['basic']['exportpdf'] = true;
+$wfPdfExportPrefix = $wgSitename;
+$wgPberWkhtmlToPdfExec = "xvfb-run /usr/local/bin/wkhtmltopdf";
+
+
 $wgScribuntoDefaultEngine = 'luastandalone';
 
 $egDraftsAutoSaveWait = 10;
