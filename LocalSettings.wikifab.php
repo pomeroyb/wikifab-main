@@ -46,6 +46,28 @@ wfLoadExtension( 'SimpleEmbedVideo' );
 wfLoadExtension( 'Tabber');
 wfLoadExtension( 'UsersPagesLinks');
 
+wfLoadExtension( 'VeTemplates');
+wfLoadExtension( 'VeForceReload');
+
+
+wfLoadExtension( 'VisualEditor' );
+// Enable by default for everybody
+$wgDefaultUserOptions['visualeditor-enable'] = 1;
+// Don't allow users to disable it
+$wgHiddenPrefs[] = 'visualeditor-enable';
+
+// Parsoid config:
+$wgVirtualRestConfig['modules']['parsoid'] = array(
+    // URL to the Parsoid instance
+	// Use port 8142 if you use the Debian package
+	// Use port 8000 for other packages
+    'url' => 'http://localhost:8142',
+    // Parsoid "domain", see below (optional)
+    'domain' => 'localhost',
+    // Parsoid "prefix", see below (optional)
+    'prefix' => 'localhost'
+);
+
 
 $wgScribuntoDefaultEngine = 'luastandalone';
 
