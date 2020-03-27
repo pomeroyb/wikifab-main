@@ -1,93 +1,57 @@
 # Wikifab Installation
 
-This project document the installation of a wikifab website (empty of tutorials)
+This project documents the installation of a wikifab style website
 
 There are 2 methods to install Wikifab:
 
-* The METHOD #1 use a full package to upload to your server using FTP.
+* METHOD #1 uses a full package to upload to your server using FTP. This method is described in detail on [Wikifab's original fork](https://github.com/Wikifab/wikifab-main). It has been removed from this repository in favor of installing the latest version using Method #2
 
-* The METHOD #2 use composer: it enable you to get the latest version of Wikifab. But It requires to have an ssh access to your server, with connectivity to download all the packages. Some web providers doesn't allow it.
-
-
-## METHOD #1 : Installation process using the full package
-
-### 1. Download package and upload it to you website
-
-Download it here : https://github.com/Wikifab/wikifab-main/releases/download/1.1.0-rc10/wikifab-1.1.0-rc10.zip
-Unzip and upload directory on your server.
+* METHOD #2 uses Composer: it enables you to get the latest version of Wikifab, but it requires to have an ssh access to your server, with connectivity to download all the packages. Some web providers doesn't allow it.
 
 
-(check https://github.com/Wikifab/wikifab-main/releases for latest versions)
+## Installation Process Using Composer
 
-### 2. Set Up your wiki
-
-Go to your website url, and follow installation instructions.
-
-Note : wikifab is only available in english and french for now. If you select another language, you will have a lot of missing translations.
-
-At the end of the installation, it should give you a file "LocalSettings.php" to put in your website directory.
-
-At this point, your wiki is up, but it does not include the wikifab part.
-
-### 3. Add wikifab extensions and configuration
-
-Edit the 'LocalSettings.php' file and add the following line at the end :
-
-	include('LocalSettings.wikifab.php');
-	
-Then execute those scripts to install wikifab extensions and pages :
-
-	php maintenance/update.php
-	php maintenance/update.php
-	php maintenance/initWikifab.php --setWikifabHomePage
-
-Note : In my case, the update.php script returned an error (in a part concerning Flow extension) at first execution, just run it a second time has solved the problem.
-
-## METHOD #2 : Installation process using composer
-
-If you allready have a mediawiki website, simply start at step 3
-
-### requirement
+### Requirement
 
 You need a web server with PHP>5.4 with acces to execute php scripts
 
-### 1. download Mediawiki
+### 1. Download Mediawiki
 
-Here is the latest : https://releases.wikimedia.org/mediawiki/1.31/mediawiki-1.31.0.tar.gz
+*Wikifab uses Mediawiki version 1.31.3. Using another version may result in one or more of the extenstions failing to work.*
 
-download it and extract to your website
+In bash : 
 
-in bash : 
-
-	wget https://releases.wikimedia.org/mediawiki/1.31/mediawiki-1.31.0.tar.gz
-	tar -xzf mediawiki-1.31.0.tar.gz
+	wget https://releases.wikimedia.org/mediawiki/1.31/mediawiki-1.31.3.tar.gz
+	tar -xzf mediawiki-1.31.3.tar.gz
 	mv mediawiki-1.31.0 /var/www/yourwebsite
 
-### 2. install your wiki
+### 2. Install Your Wiki
 
 Go to your website url, and follow installation instructions.
 
-Note : wikifab is only available in english and french for now. If you select another language, you will have a lot of missing translations.
+*Note : wikifab is only available in english and french for now. If you select another language, you will have a lot of missing translations.*
 
 At the end of the installation, it should give you a file "LocalSettings.php" to put in your website directory.
 
 At this point, your wiki is up, but it does not include the wikifab part.
 
 
-### 3. download wikifab-main
+### 3. Download wikifab-main
 
 download this project, and copy content into your website folder
 
 in bash :
 
-	wget https://github.com/Wikifab/wikifab-main/archive/master.zip
+	wget https://github.com/pomeroyb/wikifab-main/archive/master.zip
 	unzip master.zip
 	cp -R wikifab-main-master/* /var/www/yourwebsite/
 	
-### 4. download and run composer
+### 4. Download and Run Composer
 
 Download composer and execute composer.phar update into your website directory. This will get all extensions needed.
 As Wikifab has not yet a fully stable version, you need to set "minimum-stability" to "dev" in composer.json
+
+*Note: Do not run any of the following commands with sudo! Composer is designed to run in user-space*
 
 in bash:
 
@@ -96,28 +60,16 @@ in bash:
 	php composer.phar config minimum-stability dev
 	php composer.phar update --no-dev
 
-### 5. download other needed extensions
-
-Some extension are required, but not available with composer for now (comming soon ?), you need to get them and put them in extensions directory.
-
-Here is the list : 
- * Tabber https://github.com/HydraWiki/Tabber/
-
-in bash :
-
-	cd /var/www/yourwebsite
-	cd extensions
-	wget -O tabber.zip  https://github.com/HydraWiki/Tabber/archive/master.zip
-	unzip tabber.zip
-	mv Tabber-master Tabber
+### 5. Move Flow Extension
+The Flow extension installed by composer is not in the good directory, move it to 'extensions/' dir :
 	
-Moreover, the Flow extension installed by composer is not in the good directory, move it to 'extensions/' dir :
-	
+in bash:
+
 	cd /var/www/yourwebsite
 	mv vendor/mediawiki/flow extensions/Flow
 	
 
-### 6. Install Wikifab extensions
+### 6. Install Wikifab Extensions
 
 In your "LocalSettings.php" file, add a line to include  file 'LocalSettings.wikifab.php'
 
@@ -151,7 +103,46 @@ Warning : this will change the home page of your wiki, if you do not want this, 
 
 Finaly, make sure that server has write permissions on directories "images/" and "images/avatars/".
 
-Now you should have a wikifab like wiki. Please contact us if you have any difficulties.
+# Dependencies
+### Inkscape is required for ImageAnnotator to work
+    sudo apt install inkscape
+
+### Visual Editor
+Download Visual Editor version REL1_31
+Go to [this page](https://www.mediawiki.org/wiki/Special:ExtensionDistributor?extdistname=VisualEditor&extdistversion=REL1_31) to find the correct link if the below code does not work
+    
+	wget https://extdist.wmflabs.org/dist/extensions/VisualEditor-REL1_31-c3c9140.tar.gz
+
+Extract the contents into the extensions directory, e.g
+
+    tar -xzf VisualEditor-REL1_31-c3c9140.tar.gz -C /var/www/mediawiki/extensions
+
+### Install Parsoid 0.9 and NodeJS 10
+*NOTE: Parsoid is very version sensitive. You must use the above versions if working with Mediawiki 1.31.3*
+
+NodeJS
+
+    sudo apt-get remove nodejs npm  
+    curl -sL deb.nodesource.com/setup_10.x | sudo -E bash - 
+	sudo apt-get install -y nodejs
+
+Parsoid
+
+    sudo apt install dirmngr
+    sudo apt-key advanced --keyserver keys.gnupg.net --recv-keys AF380A3036A03444
+
+*If the last command above isn't working (gpgkeys: key AF380A3036A03444 canot be retrieved), you can try another key server*
+
+    sudo apt-key advanced --keyserver pgp.mit.edu --recv-keys AF380A3036A03444
+
+Download and install Parsoid 0.9
+
+    wget https://releases.wikimedia.org/parsoid/parsoid_0.9.0all_all.deb
+	sudo dpkg -i parsoid_0.9.0all_all.deb
+
+[Configure Parsoid using the instructions on this page](https://www.mediawiki.org/wiki/Parsoid/Setup#Configuration)
+* If you started with a bitnami AWS stack, your entry point will probably be *'http://localhost/wiki/api.php'*
+
 
 
 ## Recommendations
