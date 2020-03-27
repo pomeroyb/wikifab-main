@@ -9,6 +9,8 @@ $wgEnableUploads = true;
 $wgDefaultSkin = "chameleon";
 // /images/mylogo.png should be a 152x50 px image.
 $wgLogo = $wgScriptPath . '/images/mylogo.png';
+// Replace /favicon.ico with your own favicon
+$wgFavicon = $wgScriptPath . '/favicon.ico';
 
 require_once "$IP/extensions/SemanticMediaWiki/SemanticMediaWiki.php";
 enableSemantics( $wgServer );
