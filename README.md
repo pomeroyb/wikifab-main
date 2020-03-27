@@ -139,6 +139,7 @@ Download and install Parsoid 0.9
 
     wget https://releases.wikimedia.org/parsoid/parsoid_0.9.0all_all.deb
 	sudo dpkg -i parsoid_0.9.0all_all.deb
+	sudo apt-get install -f
 
 [Configure Parsoid using the instructions on this page](https://www.mediawiki.org/wiki/Parsoid/Setup#Configuration)
 * If you started with a bitnami AWS stack, your entry point will probably be *'http://localhost/wiki/api.php'*
