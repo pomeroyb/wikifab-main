@@ -65,6 +65,9 @@ Note : to edit the page, in your browser got to the url (change it for your webs
 * 2b. Search for the terms '$categories = array(' and change 'wfexplore-category-name-something' to 'wfexplore-category-name-somethingelse'
 * 2c. Open the file /extensions/Explore/i18n/YourLanguage.json
 * 2d. Add a new translation for your new 'wfexplore-category-name-somethingelse' 
+* 2e. Open the file /i18n/YourLanguage.json
+* 2f. Add a new translation for your new 'wf-propertyvalue-area-somethingelse'
+
 
 ###3. Edit the Footer
 
